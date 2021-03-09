@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
+    <title>{{title}}</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-light bg-light">
+        <h1>Миссия Колонизация Марса</h1>
+
+        {% if current_user.is_authenticated %}
+            <h5>{{ current_user.name }} {{ current_user.surname }}</h5>
+        <p>
+            <a class="btn btn-danger" href="/logout">Выход</a>
+            <a class="btn btn-warning" href="/addjob">Добавить вакансию</a>
+        </p>
+        {% else %}
+        <p>
+            <a class="btn btn-primary" href="/register">Регистрация</a>
+            <a class="btn btn-success" href="/login">Вход</a>
+        </p>
+        {% endif %}
+        <a class="navbar-brand" href="/">Mars One</a>
+    </nav>
+    <h4>Помоги нам колонизировать Марс!</h4>
+</header>
+<!-- Begin page content -->
+<main role="main" class="container">
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

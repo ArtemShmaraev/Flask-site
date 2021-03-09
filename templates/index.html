@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<meta charset="UTF-8">
+<h1 align="center">Список вакансий</h1>
+{% if current_user.is_authenticated %}
+<a class="btn btn-warning" href="/addjob">Добавить вакансию</a>
+{% endif %}
+{% for job in jobs %}
+<h3>Вакансия # {{ job.id }}</h3>
+<div class="table_container">
+    <table class="my_table">
+        <tr class="my_row">
+            <td class="title" width="400px" bgcolor="#dddddd"><strong>Название</strong></td>
+            <td class="title" width="150px" bgcolor="#dddddd"><strong>Заказчик</strong></td>
+            <td class="title" width="100px" bgcolor="#dddddd" align="center"><strong>Размер работы</strong></td>
+            <td class="title" width="200px" bgcolor="#dddddd" align="center"><strong>Сооснователи</strong></td>
+            <td class="title" width="100px" bgcolor="#dddddd" align="center"><strong>Работа выполнена?</strong></td>
+        </tr>
+        <tr class="my_row">
+            <td class="ordinary" bgcolor="#eeeeff">{{ job.job.capitalize() }}</td>
+            <td class="ordinary" bgcolor="#eeeeff">{{ names[job.team_leader][0] }} {{ names[job.team_leader][1] }}</td>
+            <td class="ordinary" bgcolor="#eeeeff" align="center">{{ job.work_size }} ч.</td>
+            <td class="ordinary" bgcolor="#eeeeff" align="center">{{ job.collaborators }}</td>
+            {% if job.is_finished %}
+            <td class="ordinary" bgcolor="#eeffee" align="center">Да</td>
+            {% else %}
+            <td class="ordinary" bgcolor="#ffeeff" align="center">Нет</td>
+            {% endif %}
+        </tr>
+        {% if current_user.id == job.team_leader or current_user.id == 1 %}
+            {% set a = "/editjob/" %}
+            {% set b = "/deljob/" %}
+
+            <p>
+            <a class="btn btn-danger" href={{ a }}{{ job.id }}>Редактировать</a>
+            <a class="btn btn-warning" href={{ b }}{{ job.id }}>Удалить</a>
+            </p>
+        {% endif %}
+
+    </table>
+</div>
+<br>
+{% endfor %}
+
+{% endblock %}
